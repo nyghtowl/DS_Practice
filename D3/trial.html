@@ -1,0 +1,47 @@
+<h1>http://zipfianacademy.com/presos/d3/data/planted_hist.csv</h1>
+<h1>"{COUNT} trees were planted on {DATE}"</h1>
+ 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script 
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+  ></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script>
+    function draw(data) {
+    "use strict"; // says don't run js if bad code
+    
+    //debugger;
+    d3.select("body").append("h2").text("Hello World")
+ 
+    d3.select("body")
+      .append("h2")
+        .text("Zipfian Academy Likes Trees!")
+ 
+     d3.select("body")
+        .selectAll('p')
+        .data(data) // csv file
+        .enter() // Asks what to do with data and mash with data - tells you want to do when joining data and presentation - rows on csv not on page - update rows on the page - exit rows that are on page and not in csv
+        .append("p")
+          .text(function(d) {
+            return d.count + " trees were planted on " + d.date;
+          });   
+ 
+    // DO STUFF
+    }
+  </script>
+</head>
+<body>
+  <script>
+  // http://intense-reef-4638.herokuapp.com/planted_hist.csv
+    d3.csv("/planted_hist.csv", function(d) {
+      return {
+        date: d['PlantDate'],
+        count: +d['0']
+      };
+    }, draw);
+  </script>
+</body>
+</html>
